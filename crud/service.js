@@ -1,8 +1,8 @@
-const url = "http://localhost:3000/new_products";
+const url = "http://localhost:3000";
 
 export const getPosts = async () => {
     try {
-       const res = await fetch(url);
+       const res = await fetch(`${url}/list`);
        const data = await res.json();
        return data; 
     } catch (error) {
@@ -12,7 +12,7 @@ export const getPosts = async () => {
 
 export const createPost = async (dataForm) => {
     try {
-        const res = await fetch(url, {
+        const res = await fetch(`${url}/list`, {
             headers: {
                 "Content-type": "application/json",
             },
@@ -26,24 +26,19 @@ export const createPost = async (dataForm) => {
     }
 };
 
-export const DeletePost = async (id) => {
+export const DeletePost = async (deleteId) => {
     try {
-        const res = await fetch(`http://localhost:3000/new_products/${id}`, {
+        const res = await fetch(`${url}/list/${deleteId}`, {
             headers: {
                 "Content-type": "application/json",
             },
-            method: "DELETE"
+            method: "DELETE",
         });
-
-        if (!res.ok) {
-            throw new Error(`Error: ${res.status} ${res.statusText}`);
-        }
-
         const data = await res.json();
-        return { success: true, data };
+        return data;
+    
     } catch (error) {
-        console.error("Error during deletion:", error.message);
-        return { success: false, message: error.message };
+        return error.message;
     }
 };
 
